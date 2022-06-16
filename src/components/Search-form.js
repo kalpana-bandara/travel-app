@@ -27,6 +27,9 @@ const SearchForm = (props) => {
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (countries.includes($("#place").val())) {
+      props.func($("#place").val());
+    }
   }
 
   return (
