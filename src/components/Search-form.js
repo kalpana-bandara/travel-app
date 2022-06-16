@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import $ from "jquery";
+import axios from "axios";
 
 const SearchForm = (props) => {
   let countries = props.countries;
   let timeOut;
   const [matchedCountries, setMatchedCountries] = useState([]);
+  const [populationCount, setPopulationCount] = useState("1m");
+
+  useEffect(() => {
+    props.func2(populationCount);
+    // eslint-disable-next-line
+  }, [populationCount]);
 
   function openCountries(e) {
     let countryName = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
@@ -30,6 +37,25 @@ const SearchForm = (props) => {
     if (countries.includes($("#place").val())) {
       props.func($("#place").val());
     }
+    const config = {
+      method: "post",
+      url: "https://countriesnow.space/api/v0.1/countries/population",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({
+        country: `${$("#place").val()}`,
+      }),
+    };
+    axios(config)
+      .then(function (response) {
+        let populationCount = response.data.data.populationCounts;
+        populationCount = populationCount[populationCount.length - 1].value;
+        setPopulationCount(populationCount);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   return (

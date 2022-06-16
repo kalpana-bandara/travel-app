@@ -70,15 +70,13 @@ class Details extends React.Component {
                 <h2>Facts</h2>
                 <div className="facts">
                   <div className="factsHead">
-                    <p>Country</p>
                     <p>Popuation</p>
                     <p>Popular for</p>
                     <p>Good to spend night </p>
                     <p>No. of crimes in last month</p>
                   </div>
                   <div className="factsDetails">
-                    <p>Singapore</p>
-                    <p>1m</p>
+                    <p>{this.props.count}</p>
                     <p>Artifact building</p>
                     <p>Yes</p>
                     <p>10 crimes</p>
