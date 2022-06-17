@@ -18,6 +18,10 @@ img {
 .page-section {
   padding-top: 50px;
 }
+a {
+  text-decoration: none;
+  color: #fff;
+}
 
 .wrapper {
   max-width: 1200px;
@@ -153,9 +157,11 @@ img {
   width: 420px;
   height: 311px;
   position: absolute;
-  bottom: -20%;
-  right: 15%;
+  top: 130%;
   z-index: -1;
+}
+.image-two:hover {
+  z-index: 10;
 }
 .image-two img {
   width: 100%;

@@ -1,6 +1,6 @@
 import Header from "./components/Header";
-import Hero from "./components/Hero-section";
-
+import Hero from "./components/Hero";
+import Details from "./components/Details";
 import { CountryNameProvider } from "./CountryNameContext";
 
 function App() {
@@ -9,6 +9,7 @@ function App() {
       <Header />
       <CountryNameProvider>
         <Hero />
+        <Details />
       </CountryNameProvider>
     </div>
   );

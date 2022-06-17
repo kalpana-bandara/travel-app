@@ -1,18 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import SearchForm from "./Search-form";
 import CountryNameContext from "../CountryNameContext";
-import Details from "./Details";
 
 const Hero = () => {
-  const [countryName, setCountryName] = useState("London");
-  const [populationCount, setPopulationCount] = useState();
-  const getCountry = (country) => {
-    setCountryName(country);
-  };
-  const getPupulationCount = (count) => {
-    setPopulationCount(count);
-  };
-
   const { countries } = useContext(CountryNameContext);
 
   const heroSmall = "images/hero-small.jpg";
@@ -25,10 +15,9 @@ const Hero = () => {
         <img src={heroSmall} srcSet={`${heroSmall} 600w, ${heroMedium} 1400w, ${heroFull} 1920w`} alt="" />
         <div className="center">
           <h1 className="hero-title">Travel.Anywhere</h1>
-          <SearchForm countries={countries} func={getCountry} func2={getPupulationCount} />
+          <SearchForm countries={countries} />
         </div>
       </section>
-      <Details country={countryName} count={populationCount} />
     </React.Fragment>
   );
 };

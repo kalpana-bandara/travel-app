@@ -1,17 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useContext } from "react";
 import $ from "jquery";
 import axios from "axios";
+import CountryNameContext from "../CountryNameContext";
 
-const SearchForm = (props) => {
-  let countries = props.countries;
-  let timeOut;
+const SearchForm = () => {
+  //get All countries and capitals
+  const {
+    countries,
+    population: [, setPopulationNumber],
+    country: [, setCountryName],
+    currency: [, setCurrencyName],
+    capital: [, setCapitalName],
+  } = useContext(CountryNameContext);
+
   const [matchedCountries, setMatchedCountries] = useState([]);
-  const [populationCount, setPopulationCount] = useState("1m");
 
-  useEffect(() => {
-    props.func2(populationCount);
-    // eslint-disable-next-line
-  }, [populationCount]);
+  const countriess = [];
+  countries.forEach((countryAndCapital) => {
+    const countries = countryAndCapital.name;
+    countriess.push(countries);
+  });
+
+  let timeOut;
 
   function openCountries(e) {
     let countryName = e.target.value.charAt(0).toUpperCase() + e.target.value.slice(1);
@@ -21,7 +31,7 @@ const SearchForm = (props) => {
     } else {
       clearTimeout(timeOut);
       timeOut = setTimeout(() => {
-        setMatchedCountries(countries.filter((name) => name.includes(countryName)));
+        setMatchedCountries(countriess.filter((name) => name.includes(countryName)));
         $(".countryList").show();
       }, 500);
     }
@@ -34,8 +44,8 @@ const SearchForm = (props) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (countries.includes($("#place").val())) {
-      props.func($("#place").val());
+    if (countriess.includes($("#place").val())) {
+      setCountryName($("#place").val());
     }
     const config = {
       method: "post",
@@ -51,7 +61,45 @@ const SearchForm = (props) => {
       .then(function (response) {
         let populationCount = response.data.data.populationCounts;
         populationCount = populationCount[populationCount.length - 1].value;
-        setPopulationCount(populationCount);
+        setPopulationNumber(populationCount);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    var configg = {
+      method: "post",
+      url: "https://countriesnow.space/api/v0.1/countries/currency",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({
+        country: `${$("#place").val()}`,
+      }),
+    };
+
+    axios(configg)
+      .then(function (response) {
+        setCurrencyName(response.data.data.currency);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    var configggg = {
+      method: "post",
+      url: "https://countriesnow.space/api/v0.1/countries/capital",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: JSON.stringify({
+        country: `${$("#place").val()}`,
+      }),
+    };
+
+    axios(configggg)
+      .then(function (response) {
+        setCapitalName(response.data.data.capital);
       })
       .catch(function (error) {
         console.log(error);

@@ -7,14 +7,14 @@ const Header = () => {
         <div className="wrapper">
           <div className="nav">
             <div className="logo">
-              <h2>Travel</h2>
+              <a href="/">
+                <h2>Travel</h2>
+              </a>
             </div>
             <div className="menu">
               <ul className="menu-items">
-                <li className="active">Home</li>
                 <li>About Us</li>
                 <li>Find a place</li>
-                <li>Contact Us</li>
               </ul>
             </div>
           </div>
